@@ -12,4 +12,4 @@ async function comprobarConexion(){
             "No se pudo conectar con el servidor.";
     }
 }
-comprobarConexion();
+comprobarConexion();    

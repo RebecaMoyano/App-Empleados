@@ -1,4 +1,5 @@
 import {hacerLogin} from './api.js'; 
+import {hacerRegistro} from './api.js';
 
 const form = document.getElementById("form"); 
 
@@ -15,6 +16,6 @@ form.addEventListener('submit' , async(e) => {
     } catch (error) {
         mensaje.textContent = 'No se pudo realizar el login.';
         mensaje.style.color = 'red';
-        console.error(error);
+        mensaje.textContent = 'Error: ' + error.message;
     }
 })
