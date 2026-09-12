@@ -1,6 +1,8 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+
 
 const app = express();
 const PORT = 3000;
@@ -9,14 +11,17 @@ const PORT = 3000;
 app.use(cors());
 app.use(express.json());
 
-// Servir los archivos estáticos de la carpeta frontend (HTML, CSS, JS)
-app.use(express.static(path.join(__dirname, '../frontend')));
-
-app.use(express.static('public'));
+// backend está dentro de frontend, por eso el frontend está un nivel arriba.
+app.use(express.static(path.join(__dirname, '..', 'frontend')));
 
 // Ruta de prueba para comprobar que la API responde
 app.get('/api/status', (req, res) => {
     res.json({ mensaje: 'El servidor de la app corporativa está activo' });
+});
+
+app.post('/api/login', (req, res) => {
+    const { email } = req.body;
+    res.json({ mensaje: `Login recibido para ${email}` });
 });
 
 app.listen(PORT, () => { //si todo salió bien 
