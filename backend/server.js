@@ -19,37 +19,43 @@ app.get('/api/status', (req, res) => {
     res.json({ mensaje: 'El servidor de la app corporativa está activo' });
 });
 
-//mejorar estas dos rutas para que hagan validaciones de email y password y unificarla en una sola funcion 
-app.post('/api/login', (req, res) => {
+function validarCredenciales(req, res, next) {
     let { email, password } = req.body;
     const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const mensajeError = "El email no es válido. Ingrese uno válido.";
-    if(!email || typeof email !== 'string' || !regexEmail.test(email)){
-        return res.status(400).json({mensaje: mensajeError});
+    // 1. Validacion del Email
+    if (!email || typeof email !== 'string') {
+        return res.status(400).json({ ok: false, mensaje: 'El correo electrónico es obligatorio.' });
     }
     email = email.trim().toLowerCase();
+    if (!regexEmail.test(email)) {
+        return res.status(400).json({ ok: false, mensaje: 'El email no es válido. Ingrese uno válido.' });
+    }
     // 2. Validaciones de la Contraseña
-    if (!password || typeof password !== 'string' || password.trim() === '' || password.length < 6) {
-        return res.status(400).json({ ok: false, mensaje: 'La contraseña es requerida.' });
+    if (!password || typeof password !== 'string') {
+        return res.status(400).json({ ok: false, mensaje: 'La contraseña es obligatoria.' });
     }
-    res.json({ mensaje: `Conexion con el servidor para el login de ${email} con exito` });
-});
+    const passwordLimpia = password.trim();
+    if (passwordLimpia === '') {
+        return res.status(400).json({ ok: false, mensaje: 'La contraseña no puede estar vacía.' });
+    }
+    if (passwordLimpia.length < 6) {
+        return res.status(400).json({ ok: false, mensaje: 'La contraseña debe tener al menos 6 caracteres.' });
+    }
+    // Guardo los datos limpios en la petición para consumirlos en las rutas
+    req.body.email = email;
+    req.body.password = passwordLimpia;
+    // Continuo con el siguiente handler
+    next();
+}
 
-app.post('/api/registro', (req, res) => {
-   let {email, password} = req.body; 
-   const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-   const mensajeError = "El email no es válido. Ingrese uno válido.";
-    if(!email || typeof email !== 'string' || !regexEmail.test(email)){
-         return res.status(400).json({mensaje: mensajeError});
-    }
-    email = email.trim().toLowerCase();
-    // 2. Validaciones de la Contraseña
-    if (!password || typeof password !== 'string' || password.trim() === '' || password.length < 6) {
-        return res.status(400).json({ ok: false, mensaje: 'La contraseña es requerida.' });
-    }
-    res.json({ mensaje: `Registro exitoso para ${email}` });
+// Endpoint de Registro (Pasa primero por el middleware validarCredenciales)
+app.post('/api/registro', validarCredenciales, (req, res) => {
+    const { email } = req.body;
+    return res.status(201).json({ 
+        ok: true, 
+        mensaje: `Registro exitoso para ${email}` 
+    });
 });
-
 app.listen(PORT, () => { //si todo salió bien 
     console.log(`Servidor corporativo corriendo en http://localhost:${PORT}`);
 });

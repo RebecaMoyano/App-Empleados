@@ -31,9 +31,7 @@ export function autenticacionUsuario(){
             mensaje.textContent = "Error: "+error.mensaje;
 
         }
-
     })
-
 }
 
 botonRegistro.addEventListener('click', async(e) => {
