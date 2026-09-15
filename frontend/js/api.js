@@ -1,4 +1,5 @@
-//definimos la funcion para hacer login 
+//archivo para peticiones FETCH 
+//se define el login 
 export async function hacerLogin(email,password){
     const respuesta = await fetch('http://localhost:3000/api/login', {
         method : 'POST',

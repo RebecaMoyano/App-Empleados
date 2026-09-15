@@ -21,7 +21,7 @@ app.get('/api/status', (req, res) => {
 
 app.post('/api/login', (req, res) => {
     const { email } = req.body;
-    res.json({ mensaje: `Login recibido para ${email}` });
+    res.json({ mensaje: `Conexion con el servidor para el login de ${email} con exito` });
 });
 
 app.listen(PORT, () => { //si todo salió bien 
