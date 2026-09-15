@@ -1,4 +1,4 @@
-import {autenticacionLogin} from './js/auth.js';
+import {autenticacionLogin, hacerRegistro} from './js/auth.js';
 //si pudimos acceder a la api 
 async function comprobarConexion(){
     try{    
@@ -14,4 +14,4 @@ async function comprobarConexion(){
     }
 }
 comprobarConexion();    
-autenticacionLogin(); 
+autenticacionUsuario(); 

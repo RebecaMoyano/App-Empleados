@@ -2,9 +2,10 @@ import {hacerLogin} from './api.js';
 import {hacerRegistro} from './api.js';
 
 const form = document.getElementById("form"); 
+const botonRegistro = document.getElementById("button-register");
 
 //se autentifica el login de usuario 
-export function autenticacionLogin(){
+export function autenticacionUsuario(){
     const form = document.getElementById("form");
     const mensaje = document.getElementById("mensaje-error");
 
@@ -35,7 +36,12 @@ export function autenticacionLogin(){
 
 }
 
+botonRegistro.addEventListener('click', async(e) => {
+    e.preventDefault();
+    hacerRegistro();
+});
+
 form.addEventListener('submit' , async(e) => {
     e.preventDefault(); 
-    await autenticacionLogin();
+    await autenticacionUsuario();
 })
