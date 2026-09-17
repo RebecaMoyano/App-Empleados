@@ -23,7 +23,7 @@ function validarCredenciales(req, res, next) {
     let { email, password } = req.body;
     const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     // 1. Validacion del Email
-    if (!email || typeof email !== 'string') {
+    if (!email || typeof email !== 'string'){
         return res.status(400).json({ ok: false, mensaje: 'El correo electrónico es obligatorio.' });
     }
     email = email.trim().toLowerCase();

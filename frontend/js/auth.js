@@ -20,14 +20,15 @@ export function autenticacionUsuario(){
             if(!respuesta.ok){
                 mensaje.style.color = "red";
                 mensaje.textContent = respuesta.mensaje;
-                //opcion temporal 
+                /*opcion temporal 
                 form.reset(); 
-                return;
+                return;*/
             }
             mensaje.style.color = "green";
             mensaje.textContent = respuesta.mensaje;
         }catch(error){
             mensaje.style.color = "red";
+            //mensaje.textContent = "Tiene error pero no se cual es"; 
             mensaje.textContent = "Error: "+error.mensaje;
 
         }

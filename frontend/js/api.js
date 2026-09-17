@@ -7,7 +7,8 @@ export async function hacerLogin(email,password){
             'Content-Type':'application/json'},
         body:JSON.stringify({email,password})
     });
-    return await respuesta.json();
+    const datos = await respuesta.json();
+    return datos;
 }
 
 export async function hacerRegistro(email,password){
